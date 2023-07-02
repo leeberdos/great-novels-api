@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "name": "Title",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Author",
+      "type": "string",
+      "format": "default"
+    },
+    {
+      "name": "Genres",
+      "type": "string",
+      "format": "default"
+    }
+  ],
+  "missingValues": [
+    ""
+  ]
+}
