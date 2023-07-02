@@ -1,0 +1,46 @@
+{
+  "columns": [
+    {
+      "width": 51,
+      "minWidth": 40,
+      "download": false,
+      "formatter": "rowSelection",
+      "titleFormatter": "rowSelection",
+      "resizable": true,
+      "headerSort": false
+    },
+    {
+      "field": "Title",
+      "title": "Title",
+      "width": 279,
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true
+    },
+    {
+      "field": "Genres",
+      "title": "Genres",
+      "width": 675,
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true
+    },
+    {
+      "field": "Author",
+      "title": "Author",
+      "width": 154,
+      "minWidth": 40,
+      "resizable": true,
+      "sorter": "string",
+      "headerSort": true
+    }
+  ],
+  "sort": [
+    {
+      "column": "Genres",
+      "dir": "asc"
+    }
+  ]
+}
