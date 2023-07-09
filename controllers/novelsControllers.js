@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize')
 const models = require('../models')
 
 const getAllNovels = async (request, response) => {
@@ -16,21 +17,21 @@ const getAllNovels = async (request, response) => {
 }
 
 const getNovelById = async (request, response) => {
-  try {
-    const { id } = request.params
+  const { searchTerm } = request.params
 
-    const foundNovel = await models.NovelsModel.findOne({
-      where: { id: id },
-      include: [
-        { model: models.AuthorsModel },
-        { model: models.GenresModel },
-      ],
-    })
+  const novel = await models.NovelsModel.findOne({
+    where: {
+      [Sequelize.Op.or]: [
+        { id: searchTerm },
+        { title: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+      ]
+    },
+    include: [{ model: models.AuthorsModel }, { model: models.GenresModel }]
+  })
 
-    return foundNovel ? response.send(foundNovel) : response.sendStatus(404)
-  } catch (err) {
-    response.status(500).send(err)
-  }
+  return novel
+    ? response.send(novel)
+    : response.sendStatus(404)
 }
 
 module.exports = {
