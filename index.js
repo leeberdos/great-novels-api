@@ -1,6 +1,6 @@
 const express = require('express')
 // Controllers
-const { getAuthorsById } = require('./controllers/authorsControllers')
+const { getAuthorsByIdOrName } = require('./controllers/authorsControllers')
 const { getNovelById } = require('./controllers/novelsControllers')
 const { getAllAuthors } = require('./controllers/authorsControllers')
 const { getAllNovels } = require('./controllers/novelsControllers')
@@ -15,11 +15,13 @@ app.get('/novels', getAllNovels)
 
 app.get('/genres', getAllGenres)
 
-app.get('/authors/:id', getAuthorsById)
+// Controller allows user to search by author ID or fuzzy last name match
+app.get('/authors/:searchTerm', getAuthorsByIdOrName)
 
-app.get('/novels/:id', getNovelById)
+app.get('/novels/:searchTerm', getNovelById)
 
 app.get('/genres/:id', getGenreById)
+
 
 app.listen(8080, () => {
   console.log('Listening on port 8080...')

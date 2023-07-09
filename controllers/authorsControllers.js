@@ -1,4 +1,6 @@
+const { Sequelize } = require('sequelize')
 const models = require('../models')
+const { response } = require('express')
 
 const getAllAuthors = async (request, response) => {
   try {
@@ -12,12 +14,39 @@ const getAllAuthors = async (request, response) => {
 
 
 
-const getAuthorsById = async (request, response) => {
+// const getAuthorsById = async (request, response) => {
+//   try {
+//     const { id } = request.params
+
+//     const foundAuthor = await models.AuthorsModel.findOne({
+//       where: { id: id },
+//       include: [
+//         {
+//           model: models.NovelsModel,
+//           include: [
+//             { model: models.GenresModel }
+//           ]
+//         },
+//       ]
+//     })
+
+//     return foundAuthor ? response.send(foundAuthor) : response.sendStatus(404)
+//   } catch (err) {
+//     response.send(500).send(err)
+//   }
+// }
+
+const getAuthorsByIdOrName = async (request, response) => {
   try {
-    const { id } = request.params
+    const { searchTerm } = request.params
 
     const foundAuthor = await models.AuthorsModel.findOne({
-      where: { id: id },
+      where: {
+        [Sequelize.Op.or]: [
+          { id: searchTerm },
+          { nameLast: { [Sequelize.Op.like]: `%${searchTerm}%` } }
+        ],
+      },
       include: [
         {
           model: models.NovelsModel,
@@ -30,11 +59,12 @@ const getAuthorsById = async (request, response) => {
 
     return foundAuthor ? response.send(foundAuthor) : response.sendStatus(404)
   } catch (err) {
-    response.send(500).send(err)
+    console.log(err)
+    response.status(500).send(err)
   }
 }
 
 module.exports = {
-  getAuthorsById,
+  getAuthorsByIdOrName,
   getAllAuthors
 }

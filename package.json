@@ -4,9 +4,12 @@
   "description": "## Part 1 Instructions In the initial commit of this project you were provided with data on several novels including their author and genres. Working in a branch called `part-one-answer`, your tasks are:",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "env-cmd nodemon index.js",
     "lint": "eslint --format codeframe .",
-    "lint:fix": "eslint --fix --format codeframe ."
+    "lint:fix": "eslint --fix --format codeframe .",
+    "dev:migrate:up": "env-cmd sequelize db:migrate --env development --config ./config/sequelize.js",
+    "dev:migrate:undo": "env-cmd sequelize  db:migrate:undo --env development --config ./config/sequelize.js",
+    "dev:migrate:destroy": "env-cmd sequelize  db:migrate:undo:all --env development --config ./config/sequelize.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +27,9 @@
     "sequelize": "^5.22.5"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.1"
   }
 }
