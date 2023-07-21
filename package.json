@@ -4,7 +4,12 @@
   "description": "## Part 1 Instructions In the initial commit of this project you were provided with data on several novels including their author and genres. Working in a branch called `part-one-answer`, your tasks are:",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd nodemon index.js",
+    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\" ",
+    "dev:server": "npm run dev:client:build && env-cmd nodemon index.js",
+    "dev:client": "cd client && npm start",
+    "dev:client:build": "cd client && npm run build",
+    "dev:client:test": "cd client && npm run test",
+    "dev:server:test": "mocha tests/**/*.test.js",
     "lint": "eslint --format codeframe .",
     "lint:fix": "eslint --fix --format codeframe .",
     "dev:migrate:up": "env-cmd sequelize db:migrate --env development --config ./config/sequelize.js",
@@ -22,6 +27,8 @@
   },
   "homepage": "https://github.com/stackeducation/great-novels-api#readme",
   "dependencies": {
+    "concurrently": "^8.2.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "mysql2": "^2.3.3",
     "sequelize": "^5.22.5"

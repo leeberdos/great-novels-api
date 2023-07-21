@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 // Controllers
 const { getAuthorsByIdOrName } = require('./controllers/authorsControllers')
 const { getNovelById } = require('./controllers/novelsControllers')
@@ -8,6 +9,10 @@ const { getAllGenres } = require('./controllers/genresControllers')
 const { getGenreById } = require('./controllers/genresControllers')
 
 const app = express()
+
+app.use(cors());
+//To support react, enable static files
+app.use(express.static("client/build"));
 
 app.get('/authors', getAllAuthors)
 
